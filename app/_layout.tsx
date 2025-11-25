@@ -5,7 +5,20 @@ export default function Layout() {
     <Stack>
       <Stack.Screen name="index" options={{ title: "Stack - Page 1" }} />
       <Stack.Screen name="page2" options={{ title: "Stack - Page 2" }} />
-      <Stack.Screen name="page3" options={{ title: "Stack - Page 3" }} />
+      <Stack.Screen
+        name="page3"
+        options={{
+          title: "Stack - Page 3",
+          headerBackVisible: false, // enlève la flèche retour
+        }}
+      />
+      <Stack.Screen name="page4" options={{ title: "Stack - Page 4" }} />
+      <Stack.Screen
+        name="page5"
+        options={{
+          headerShown: false, // aucun header
+        }}
+      />
     </Stack>
   );
 }
