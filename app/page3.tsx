@@ -8,8 +8,8 @@ export default function Page3() {
       <Text>Page 3  - No back button</Text>
       <Button title="Retour" onPress={() => router.back()} />
       <Text></Text>
-      <Button title="Aller à Page4" onPress={() => router.push("./page4")} />
-      <Link href="../page4" style={{ marginTop: 20, color: "blue", textDecorationLine: "underline" }}>
+      <Button title="Aller à Page4" onPress={() => router.push("/page4")} />
+      <Link href="/page4" style={{ marginTop: 20, color: "blue", textDecorationLine: "underline" }}>
         Page 4
       </Link>
     </View>

@@ -7,7 +7,7 @@ export default function Page1() {
     <View style={{ padding: 20 }}>
       <Text>Page 1</Text>
       <Button title="Aller à Page 2" onPress={() => router.push("/page2")} />
-      <Link href="./page2" style={{ marginTop: 20, color: "blue", textDecorationLine: "underline" }}>
+      <Link href="/page2" style={{ marginTop: 20, color: "blue", textDecorationLine: "underline" }}>
         Aller à Page 2
       </Link>
     </View>
