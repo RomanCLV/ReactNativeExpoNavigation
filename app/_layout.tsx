@@ -1,24 +1,36 @@
-import { Stack } from "expo-router";
+import { Tabs } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Layout() {
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ title: "Stack - Page 1" }} />
-      <Stack.Screen name="page2" options={{ title: "Stack - Page 2" }} />
-      <Stack.Screen
-        name="page3"
-        options={{
-          title: "Stack - Page 3",
-          headerBackVisible: false, // enlève la flèche retour
-        }}
-      />
-      <Stack.Screen name="page4" options={{ title: "Stack - Page 4" }} />
-      <Stack.Screen
+    <Tabs>
+      <Tabs.Screen 
+      name="index" 
+      options={{
+        title: "Tabs - Page 1", 
+        tabBarLabel: "Page 1",
+        tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={size} color={color} />
+          ),
+      }} />
+      <Tabs.Screen 
+      name="page2" 
+      options={{ 
+        title: "Tabs - Page 2", 
+        tabBarLabel: "Page 2",
+        tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings-outline" size={size} color={color} />
+          )
+        }} />
+      <Tabs.Screen name="page3" options={{ title: "Tabs - Page 3", tabBarLabel: "Page 3" }} />
+      <Tabs.Screen name="page4" options={{ title: "Tabs - Page 4", tabBarLabel: "Page 4" }} />
+      <Tabs.Screen
         name="page5"
         options={{
-          headerShown: false, // aucun header
+          headerShown: false,
+          tabBarLabel: "Page 5",
         }}
       />
-    </Stack>
+    </Tabs>
   );
 }
