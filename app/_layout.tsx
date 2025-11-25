@@ -1,24 +1,59 @@
-import { Stack } from "expo-router";
+import { Drawer } from "expo-router/drawer";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Layout() {
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ title: "Stack - Page 1" }} />
-      <Stack.Screen name="page2" options={{ title: "Stack - Page 2" }} />
-      <Stack.Screen
+    <Drawer>
+      <Drawer.Screen 
+        name="index" 
+        options={{ 
+          title: "Drawer - Page 1",
+          drawerLabel: "Page 1",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="home" size={size} color={color} />
+          ),
+        }} 
+      />
+      <Drawer.Screen 
+        name="page2" 
+        options={{ 
+          title: "Drawer - Page 2",
+          drawerLabel: "Page 2",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="list" size={size} color={color} />
+          ),
+        }} 
+      />
+      <Drawer.Screen
         name="page3"
         options={{
-          title: "Stack - Page 3",
-          headerBackVisible: false, // enlève la flèche retour
+          title: "Drawer - Page 3",
+          drawerLabel: "Page 3",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="settings" size={size} color={color} />
+          ),
         }}
       />
-      <Stack.Screen name="page4" options={{ title: "Stack - Page 4" }} />
-      <Stack.Screen
+      <Drawer.Screen 
+        name="page4" 
+        options={{ 
+          title: "Drawer - Page 4",
+          drawerLabel: "Page 4",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="person" size={size} color={color} />
+          ),
+        }} 
+      />
+      <Drawer.Screen
         name="page5"
         options={{
-          headerShown: false, // aucun header
+          headerShown: false,
+          drawerLabel: "Page 5 (no header)",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="star" size={size} color={color} />
+          ),
         }}
       />
-    </Stack>
+    </Drawer>
   );
 }
