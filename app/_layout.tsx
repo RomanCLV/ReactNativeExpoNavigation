@@ -1,3 +1,7 @@
+/*
+Expo Router :
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+*/
 import { Stack } from "expo-router";
 
 export default function Layout() {
