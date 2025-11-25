@@ -3,9 +3,16 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-native",
-
-    // Pour les imports d'assets (.png, .svg…)
     "resolveJsonModule": true,
     "esModuleInterop": true,
-  }
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

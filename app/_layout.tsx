@@ -1,5 +1,20 @@
+/*
+Expo Router :
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+
+Babel Preset Expo :
+npm install --save-dev babel-preset-expo --legacy-peer-deps
+npx expo install react-native-worklets
+
+Expo Drawer :
+npx expo install @react-navigation/drawer react-native-gesture-handler react-native-reanimated
+
+Vector Icons :
+npm install @expo/vector-icons --legacy-peer-deps
+*/
+
 import { Drawer } from "expo-router/drawer";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function Layout() {
   return (
@@ -10,8 +25,8 @@ export default function Layout() {
           title: "Drawer - Page 1",
           drawerLabel: "Page 1",
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
+            <Ionicons name="home-outline" size={size} color={color} />
+          )
         }} 
       />
       <Drawer.Screen 
@@ -20,18 +35,15 @@ export default function Layout() {
           title: "Drawer - Page 2",
           drawerLabel: "Page 2",
           drawerIcon: ({ color, size }) => (
-            <Ionicons name="list" size={size} color={color} />
-          ),
+            <Ionicons name="settings-outline" size={size} color={color} />
+          )
         }} 
       />
       <Drawer.Screen
         name="page3"
         options={{
           title: "Drawer - Page 3",
-          drawerLabel: "Page 3",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="settings" size={size} color={color} />
-          ),
+          drawerLabel: "Page 3"
         }}
       />
       <Drawer.Screen 
@@ -39,9 +51,6 @@ export default function Layout() {
         options={{ 
           title: "Drawer - Page 4",
           drawerLabel: "Page 4",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
-          ),
         }} 
       />
       <Drawer.Screen
@@ -49,9 +58,6 @@ export default function Layout() {
         options={{
           headerShown: false,
           drawerLabel: "Page 5 (no header)",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="star" size={size} color={color} />
-          ),
         }}
       />
     </Drawer>
