@@ -5,7 +5,7 @@ export default function Page3() {
   const router = useRouter();
   return (
     <View style={{ padding: 20 }}>
-      <Text>Page 3  - No back button</Text>
+      <Text>Page 3  - No bar</Text>
       <Button title="Retour" onPress={() => router.back()} />
       <Text></Text>
       <Button title="Aller à Page4" onPress={() => router.push("/page4")} />

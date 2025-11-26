@@ -6,8 +6,7 @@ export default function Page5() {
   const router = useRouter();
   return (
     <SafeAreaView style={{ padding: 20 }}>
-      <Text style={{ fontSize: 20 }}>Page 5 - No header</Text>
-
+      <Text style={{ fontSize: 20 }}>Page 5 - No header & bar</Text>
       <TouchableOpacity
         style={{ marginTop: 20 }}
         onPress={() => router.back()}
