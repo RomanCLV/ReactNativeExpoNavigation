@@ -19,7 +19,7 @@ import { useNavigation } from 'expo-router';
 import { Drawer } from "expo-router/drawer";
 import { DrawerActions } from '@react-navigation/native';
 
-// Composant pour le bouton personnalisé
+// Composant pour le bouton personnalisé pour page 2
 function CustomDrawerButton() {
   const navigation = useNavigation();
   
