@@ -43,7 +43,9 @@ export default function Layout() {
         name="page3"
         options={{
           title: "Drawer - Page 3",
-          drawerLabel: "Page 3"
+          drawerLabel: "Page 3",
+          headerLeft: () => null, // Retire seulement le bouton burger
+          swipeEnabled: false, // Désactive le geste de glissement
         }}
       />
       <Drawer.Screen 
@@ -58,6 +60,7 @@ export default function Layout() {
         options={{
           headerShown: false,
           drawerLabel: "Page 5 (no header)",
+          swipeEnabled: false, // Désactive le geste de glissement
         }}
       />
     </Drawer>
