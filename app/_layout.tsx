@@ -20,6 +20,7 @@ import { DrawerActions } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import CustomDrawerContent from "../components/customDrawerContent";
 
+// Composant pour le bouton personnalisé pour page 2
 function CustomDrawerButton() {
   const navigation = useNavigation();
   
