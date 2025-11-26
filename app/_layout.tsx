@@ -37,7 +37,7 @@ function CustomDrawerButton() {
 export default function Layout() {
   return (
     <Drawer
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerContent={(props: any) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen 
         name="index" 
