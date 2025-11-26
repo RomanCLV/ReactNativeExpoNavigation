@@ -14,12 +14,12 @@ npm install @expo/vector-icons --legacy-peer-deps
 */
 
 import { Pressable } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from 'expo-router';
 import { Drawer } from "expo-router/drawer";
+import { useNavigation } from 'expo-router';
 import { DrawerActions } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import CustomDrawerContent from "../components/customDrawerContent";
 
-// Composant pour le bouton personnalisé
 function CustomDrawerButton() {
   const navigation = useNavigation();
   
@@ -35,51 +35,38 @@ function CustomDrawerButton() {
 
 export default function Layout() {
   return (
-    <Drawer>
+    <Drawer
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
       <Drawer.Screen 
         name="index" 
-        options={{ 
-          title: "Drawer - Page 1",
-          drawerLabel: "Page 1",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
-          )
-        }} 
+        options={{ title: "Drawer - Page 1" }} 
       />
       <Drawer.Screen 
         name="page2" 
         options={{ 
           title: "Drawer - Page 2",
-          drawerLabel: "Page 2",
-          drawerIcon: ({ color, size }) => (
-            <Ionicons name="settings-outline" size={size} color={color} />
-          ),
           headerLeft: () => <CustomDrawerButton />,
         }} 
       />
-      <Drawer.Screen
-        name="page3"
-        options={{
+      <Drawer.Screen 
+        name="page3" 
+        options={{ 
           title: "Drawer - Page 3",
-          drawerLabel: "Page 3",
           headerLeft: () => null, // Retire seulement le bouton burger
           swipeEnabled: false, // Désactive le geste de glissement
-        }}
+        }} 
       />
       <Drawer.Screen 
         name="page4" 
-        options={{ 
-          title: "Drawer - Page 4",
-          drawerLabel: "Page 4",
-        }} 
+        options={{ title: "Drawer - Page 4" }} 
       />
-      <Drawer.Screen
-        name="page5"
-        options={{
+      <Drawer.Screen 
+        name="page5" 
+        options={{ 
           headerShown: false,
-          drawerLabel: "Page 5 (no header)",
           swipeEnabled: false, // Désactive le geste de glissement
-        }}
+        }} 
       />
     </Drawer>
   );
