@@ -13,8 +13,25 @@ Vector Icons :
 npm install @expo/vector-icons --legacy-peer-deps
 */
 
-import { Drawer } from "expo-router/drawer";
+import { Pressable } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from 'expo-router';
+import { Drawer } from "expo-router/drawer";
+import { DrawerActions } from '@react-navigation/native';
+
+// Composant pour le bouton personnalisé
+function CustomDrawerButton() {
+  const navigation = useNavigation();
+  
+  return (
+    <Pressable 
+      onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+      style={{ marginLeft: 15 }}
+    >
+      <Ionicons name="settings-outline" size={28} />
+    </Pressable>
+  );
+}
 
 export default function Layout() {
   return (
@@ -36,7 +53,8 @@ export default function Layout() {
           drawerLabel: "Page 2",
           drawerIcon: ({ color, size }) => (
             <Ionicons name="settings-outline" size={size} color={color} />
-          )
+          ),
+          headerLeft: () => <CustomDrawerButton />,
         }} 
       />
       <Drawer.Screen
