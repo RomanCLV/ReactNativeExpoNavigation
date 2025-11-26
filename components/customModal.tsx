@@ -1,4 +1,4 @@
-import { Modal, View, Text, Button, StyleSheet, Pressable } from "react-native";
+import { Modal, Text, Button, StyleSheet, Pressable } from "react-native";
 
 type CustomModalProps = {
   visible: boolean;
