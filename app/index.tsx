@@ -1,15 +1,23 @@
-import { View, Text, Button } from "react-native";
-import { useRouter , Link } from "expo-router";
+import { View } from "react-native";
+
+import SwipeTabs from "../components/swipe-tabs/swipeTabs";
+
+import PostsTab from "../components/swipe-tabs/postsTab";
+import ShortsTab from "../components/swipe-tabs/shortsTab";
+import RepostTab from "../components/swipe-tabs/repostTab";
+import ProfileTab from "../components/swipe-tabs/profileTab";
 
 export default function Page1() {
-  const router = useRouter();
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Page 1</Text>
-      <Button title="Aller à Page 2" onPress={() => router.push("/page2")} />
-      <Link href="/page2" style={{ marginTop: 20, color: "blue", textDecorationLine: "underline" }}>
-        Aller à Page 2
-      </Link>
+    <View style={{flex: 1}}>
+      <SwipeTabs
+        screens={[
+          <PostsTab />,
+          <ShortsTab />,
+          <RepostTab />,
+          <ProfileTab />,
+        ]}
+      />
     </View>
   );
 }
