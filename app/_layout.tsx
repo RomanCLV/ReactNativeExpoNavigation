@@ -2,15 +2,11 @@
 Expo Router :
 npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
 
-Babel Preset Expo :
-npm install --save-dev babel-preset-expo --legacy-peer-deps
-npx expo install react-native-worklets
+Vector Icons :
+npm install @expo/vector-icons
 
 Expo Drawer :
-npx expo install @react-navigation/drawer react-native-gesture-handler react-native-reanimated
-
-Vector Icons :
-npm install @expo/vector-icons --legacy-peer-deps
+npx expo install @react-navigation/drawer react-native-worklets react-native-gesture-handler react-native-reanimated
 */
 
 import { Pressable } from "react-native";
