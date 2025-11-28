@@ -3,14 +3,10 @@ Expo Router :
 npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
 
 Vector Icons :
-npm install @expo/vector-icons --legacy-peer-deps
-
-Babel Preset Expo & Worklets :
-npm install --save-dev babel-preset-expo --legacy-peer-deps
-npx expo install react-native-worklets
+npm install @expo/vector-icons
 
 Gesture Handler & Reanimated (for swipe tabs) :
-npx expo install react-native-gesture-handler react-native-reanimated
+npx expo install react-native-worklets react-native-gesture-handler react-native-reanimated
 */
 
 import { Tabs } from "expo-router";
