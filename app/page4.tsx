@@ -1,14 +1,29 @@
-import { View, Text, Button } from "react-native";
-import { useRouter } from "expo-router";
+import { View } from "react-native";
+import { Link } from "expo-router";
+
+import SwipeTabs, { SwipeTabScreen } from "../components/swipe-tabs/swipeTabs";
+
+import PostsTab from "../components/swipe-tabs/postsTab";
+import ShortsTab from "../components/swipe-tabs/shortsTab";
+import RepostTab from "../components/swipe-tabs/repostTab";
+import ProfileTab from "../components/swipe-tabs/profileTab";
 
 export default function Page4() {
-  const router = useRouter();
+  const screens: SwipeTabScreen[] = [
+    { component: <PostsTab /> },
+    { component: <ShortsTab /> },
+    { component: <RepostTab /> },
+    { component: <ProfileTab /> },
+  ];
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Page 4</Text>
-      <Button title="Retour" onPress={() => router.back()} />
-      <Text></Text>
-      <Button title="Aller à Page 5" onPress={() => router.push("/page5")} />
+    <View style={{ flex: 1}}>
+      <Link href="./" style={{ marginTop: 20, color: "blue", textDecorationLine: "underline" }}>
+        Aller à Page 1 (index)
+      </Link>
+      <SwipeTabs
+        screens={screens}
+        showTabBar={false}
+      />
     </View>
   );
 }
