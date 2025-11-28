@@ -4,19 +4,45 @@ import PostsTab from "../components/swipe-tabs/postsTab";
 import ShortsTab from "../components/swipe-tabs/shortsTab";
 import RepostTab from "../components/swipe-tabs/repostTab";
 import ProfileTab from "../components/swipe-tabs/profileTab";
-import SwipeTabs from "../components/swipe-tabs/swipeTabs";
+import SwipeTabs, { SwipeTabItem } from "../components/swipe-tabs/swipeTabs";
+
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Page1() {
+
+  const screens: SwipeTabItem[] = [
+  {
+    component: <PostsTab />,
+    title: "Posts",
+    icon: ({ color, size }: { color: string; size: number }) => (
+      <Ionicons name="document-text-outline" size={size} color={color} />
+    ),
+  },
+  {
+    component: <ShortsTab />,
+    title: "Shorts",
+    icon: "🎬",
+  },
+  {
+    component: <RepostTab />,
+    title: "Reposts",
+    //icon: "🔄",
+  },
+  {
+    component: <ProfileTab />,
+    title: "Profile",
+    //icon: "👤",
+  },
+];
 
   return (
     <View style={{ flex: 1 }}>
       <SwipeTabs
-        screens={[
-          { name: "Posts", component: <PostsTab /> },
-          { name: "Shorts", component: <ShortsTab /> },
-          { name: "Repost", component: <RepostTab /> },
-          { name: "Profile", component: <ProfileTab /> },
-        ]}
+        screens={screens}
+        initialIndex={2}
+        showTabBar={true}
+        tabBarPosition="top"
+        onIndexChange={(i) => console.log("Nouvel index:", i)}
       />
     </View>
   );
