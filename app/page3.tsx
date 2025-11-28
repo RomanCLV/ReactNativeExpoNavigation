@@ -1,17 +1,49 @@
-import { View, Text, Button } from "react-native";
-import { useRouter, Link } from "expo-router";
+import { View } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import SwipeTabs, { SwipeTabScreen } from "../components/swipe-tabs/swipeTabs";
+
+import PostsTab from "../components/swipe-tabs/postsTab";
+import ShortsTab from "../components/swipe-tabs/shortsTab";
+import RepostTab from "../components/swipe-tabs/repostTab";
+import ProfileTab from "../components/swipe-tabs/profileTab";
 
 export default function Page3() {
-  const router = useRouter();
+  const insets = useSafeAreaInsets();
+  const screens: SwipeTabScreen[] = [
+    {
+      component: <PostsTab />,
+      title: "Posts",
+      icon: "📸",
+    },
+    {
+      component: <ShortsTab />,
+      title: "Shorts",
+      icon: "🎬",
+    },
+    {
+      component: <RepostTab />,
+      title: "Reposts",
+      icon: "🔄",
+    },
+    {
+      component: <ProfileTab />,
+      title: "Profile",
+      icon: "👤",
+    },
+  ];
+
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Page 3  - No bar</Text>
-      <Button title="Retour" onPress={() => router.back()} />
-      <Text></Text>
-      <Button title="Aller à Page4" onPress={() => router.push("/page4")} />
-      <Link href="/page4" style={{ marginTop: 20, color: "blue", textDecorationLine: "underline" }}>
-        Page 4
-      </Link>
+    <View style={{flex: 1, backgroundColor: '#ffffff'}}>
+      <View style={{height: insets.top}} />
+      <SwipeTabs
+        screens={screens}
+        initialIndex={0}
+        showTabBar={true}
+        tabBarPosition="top"
+        onIndexChange={(index) => {
+          console.log("Nouvel index actif:", index);
+        }}
+      />
     </View>
   );
 }

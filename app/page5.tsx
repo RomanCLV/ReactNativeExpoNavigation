@@ -1,18 +1,26 @@
-import { Text, TouchableOpacity } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useRouter } from "expo-router";
+import { View } from "react-native";
+
+import SwipeTabs, { SwipeTabScreen } from "../components/swipe-tabs/swipeTabs";
+
+import PostsTab from "../components/swipe-tabs/postsTab";
+import ShortsTab from "../components/swipe-tabs/shortsTab";
+import RepostTab from "../components/swipe-tabs/repostTab";
+import ProfileTab from "../components/swipe-tabs/profileTab";
 
 export default function Page5() {
-  const router = useRouter();
+  const screens: SwipeTabScreen[] = [
+    { component: <PostsTab /> },
+    { component: <ShortsTab /> },
+    { component: <RepostTab /> },
+    { component: <ProfileTab /> },
+  ];
+
   return (
-    <SafeAreaView style={{ padding: 20 }}>
-      <Text style={{ fontSize: 20 }}>Page 5 - No header & bar</Text>
-      <TouchableOpacity
-        style={{ marginTop: 20 }}
-        onPress={() => router.back()}
-      >
-        <Text style={{ color: "blue" }}>Retour</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <View style={{ flex: 1 }}>
+      <SwipeTabs
+        screens={screens}
+        showTabBar={false}
+      />
+    </View>
   );
 }

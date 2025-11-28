@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import { Link } from "expo-router";
 
 import SwipeTabs, { SwipeTabScreen } from "../components/swipe-tabs/swipeTabs";
 
@@ -17,9 +16,6 @@ export default function Page4() {
   ];
   return (
     <View style={{ flex: 1}}>
-      <Link href="./" style={{ marginTop: 20, color: "blue", textDecorationLine: "underline" }}>
-        Aller à Page 1 (index)
-      </Link>
       <SwipeTabs
         screens={screens}
         showTabBar={false}

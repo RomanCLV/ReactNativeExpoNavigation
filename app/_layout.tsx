@@ -38,7 +38,7 @@ function ContentLayout() {
             <Ionicons name="settings-outline" size={size} color={color} />
           )
         }} />
-      <Tabs.Screen name="page3" options={{ title: "Tabs - Page 3", tabBarLabel: "Page 3", tabBarStyle: { display: "none" } }} />
+      <Tabs.Screen name="page3" options={{ headerShown: false, tabBarLabel: "Page 3" }} />
       <Tabs.Screen name="page4" options={{ title: "Tabs - Page 4", tabBarLabel: "Page 4" }} />
       <Tabs.Screen
         name="page5"
