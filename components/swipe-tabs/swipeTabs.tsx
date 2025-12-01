@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -6,9 +6,12 @@ import {
   Text,
   ViewStyle,
   TextStyle,
+  Animated,
+  Dimensions,
 } from "react-native";
 import PagerView from "react-native-pager-view";
 
+const screenWidth = Dimensions.get("window").width;
 export type SwipeTabItem = {
   title?: string;
   icon?: string | ((props: { color: string; size: number }) => React.ReactNode);
@@ -47,48 +50,67 @@ type Props = {
   iconSize?: number;
 };
 
-export default function SwipeTabs({
-  screens,
-  initialIndex = 0,
-  showTabBar = true,
-  tabBarPosition = "top",
-  showSelectedIndicator = true,
-  onIndexChange,
-  tabBarStyle,
-  tabStyle,
-  indicatorStyle,
-  textStyle,
-  activeTextStyle,
-  iconColor="#666",
-  activeIconColor="#000",
-  iconSize=22,
-}: Props) {
+export default function SwipeTabs(props: Props) {
+  const {
+    screens,
+    initialIndex = 0,
+    showTabBar = true,
+    tabBarPosition = "top",
+    showSelectedIndicator = true,
+    onIndexChange,
+    tabBarStyle,
+    tabStyle,
+    indicatorStyle,
+    textStyle,
+    activeTextStyle,
+    iconColor = "#666",
+    activeIconColor = "#000",
+    iconSize = 22,
+  } = props;
+
   const pagerRef = useRef<PagerView>(null);
   const [index, setIndex] = useState(initialIndex);
 
+  // Animated values
+  const pageIndex = useRef(new Animated.Value(initialIndex)).current; // integer page
+  const scrollOffset = useRef(new Animated.Value(0)).current; // offset 0..1
+
+  // geometry
+  const tabWidth = screenWidth / screens.length;
+  const indicatorWidth = tabWidth * 0.6;
+  const indicatorCenterOffset = (tabWidth - indicatorWidth) / 2; // center under tab
+
+  // translateX = (pageIndex + scrollOffset) * tabWidth + centerOffset
+  const combined = Animated.add(pageIndex, scrollOffset); // animated node
+  const translateX = Animated.add(
+    Animated.multiply(combined, tabWidth),
+    indicatorCenterOffset
+  );
+
+  useEffect(() => {
+    // keep state index and pageIndex in sync initially
+    pageIndex.setValue(initialIndex);
+    setIndex(initialIndex);
+  }, [initialIndex, pageIndex]);
+
   const handleChange = (i: number) => {
-    setIndex(i);
-    pagerRef.current?.setPage(i);
+    pagerRef.current?.setPage(i);   // animation native
+    //setIndex(i);
     onIndexChange?.(i);
   };
 
   const maxIconSize = Math.max(
-    ...screens.map(s => s.iconSize ?? iconSize ?? 22),
+    ...screens.map((s) => s.iconSize ?? iconSize ?? 22)
   );
   const iconContainerHeight = maxIconSize + 2;
 
   const renderIcon = (screen: SwipeTabItem, active?: boolean): React.ReactNode => {
     const icon = active && screen.iconSelected ? screen.iconSelected : screen.icon;
     if (!icon) return null;
-
-    // Couleur prioritaire : locale > globale > défaut
     const color = active
       ? screen.activeIconColor ?? activeIconColor ?? "#000"
       : screen.iconColor ?? iconColor ?? "#666";
-
-    // Taille prioritaire : locale > globale > défaut
     const size = screen.iconSize ?? iconSize ?? 22;
-
     if (typeof icon === "string") {
       return (
         <Text style={{ fontSize: size, color, opacity: active ? 1 : 0.5 }}>
@@ -96,10 +118,10 @@ export default function SwipeTabs({
         </Text>
       );
     }
-
     return icon({ color, size });
   };
 
+  // Build tabBar (indicator must be OUTSIDE the map)
   const tabBar = (
     <View style={[styles.tabBar, tabBarStyle]}>
       {screens.map((tab, i) => {
@@ -111,16 +133,17 @@ export default function SwipeTabs({
           <TouchableOpacity
             key={i}
             onPress={() => handleChange(i)}
-            style={[
-              styles.tab,
-              tabStyle,
-              tab.style,
-              active && tab.activeStyle,
-            ]}
+            style={[styles.tab, tabStyle, tab.style, active && tab.activeStyle]}
           >
             <View style={styles.tabContent}>
               {hasIcon && (
-                <View style={[styles.iconContainer, { minHeight: iconContainerHeight }, hasTitle && styles.iconWithTitle]}>
+                <View
+                  style={[
+                    styles.iconContainer,
+                    { minHeight: iconContainerHeight },
+                    hasTitle && styles.iconWithTitle,
+                  ]}
+                >
                   {renderIcon(tab, active)}
                 </View>
               )}
@@ -141,18 +164,26 @@ export default function SwipeTabs({
                 </Text>
               )}
             </View>
-            {active && showSelectedIndicator && (
-              <View
-                style={[
-                  styles.activeIndicator,
-                  indicatorStyle,
-                  tab.indicatorStyle,
-                ]}
-              />
-            )}
           </TouchableOpacity>
         );
       })}
+
+      {/* Single animated indicator overlay */}
+      {
+      showSelectedIndicator && (
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            styles.activeIndicator,
+            indicatorStyle,                 // global
+            screens[index]?.indicatorStyle, // local
+            {
+              width: indicatorWidth,
+              transform: [{ translateX }],
+            },
+          ]}
+        />
+      )}
     </View>
   );
 
@@ -168,6 +199,13 @@ export default function SwipeTabs({
           setIndex(pos);
           onIndexChange?.(pos);
         }}
+        onPageScroll={(e) => {
+          // position: nearest integer page, offset: 0..1
+          const { position, offset } = e.nativeEvent;
+          // update animated values
+          pageIndex.setValue(position);
+          scrollOffset.setValue(offset);
+        }}
       >
         {screens.map((tab, i) => (
           <View key={i} style={{ flex: 1 }}>
@@ -180,17 +218,20 @@ export default function SwipeTabs({
   );
 }
 
+// styles (slightly adjusted for indicator overlay)
 const styles = StyleSheet.create({
   tabBar: {
     flexDirection: "row",
     backgroundColor: "#fff",
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
+    position: "relative", // important for absolutely positioned indicator
   },
   tab: {
+    backgroundColor: "transparent",
     flex: 1,
     position: "relative",
-    paddingVertical: 10,
+    paddingVertical: 8,
     paddingHorizontal: 4,
   },
   tabContent: {
@@ -198,27 +239,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 4,
   },
-  iconContainer: { 
+  iconContainer: {
     alignItems: "center",
     justifyContent: "center",
   },
   iconWithTitle: {
     marginBottom: 2,
   },
-  iconText: {
-    fontSize: 20,
-    opacity: 1,
-  },
-  iconInactive: {
-    opacity: 0.5,
-  },
   activeIndicator: {
     position: "absolute",
     bottom: 0,
-    left: "20%",
-    right: "20%",
+    left: 0, // left is handled by translateX
     height: 2,
     backgroundColor: "#000",
+    borderRadius: 1,
   },
   tabText: {
     fontSize: 12,

@@ -54,7 +54,7 @@ export default function Page1() {
     <View style={{ flex: 1 }}>
       <SwipeTabs
         screens={screens}
-        initialIndex={2}
+        initialIndex={0}
         showTabBar={true}
         tabBarPosition="top"
         onIndexChange={(i) => console.log("Nouvel index:", i)}
