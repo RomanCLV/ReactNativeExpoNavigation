@@ -83,9 +83,7 @@ export default function SwipeTabs({
 
   return (
     <View style={{ flex: 1 }}>
-
       {showTabBar && tabBarPosition === "top" && tabBar}
-
       <PagerView
         style={{ flex: 1 }}
         ref={pagerRef}
@@ -102,7 +100,6 @@ export default function SwipeTabs({
           </View>
         ))}
       </PagerView>
-
       {showTabBar && tabBarPosition === "bottom" && tabBar}
     </View>
   );
@@ -115,7 +112,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#eee",
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
-    alignItems: "center",
   },
   tab: {
     flex: 1,

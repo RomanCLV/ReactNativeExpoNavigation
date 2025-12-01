@@ -26,12 +26,12 @@ export default function Page1() {
   {
     component: <RepostTab />,
     title: "Reposts",
-    //icon: "🔄",
+    icon: "🔄",
   },
   {
     component: <ProfileTab />,
     title: "Profile",
-    //icon: "👤",
+    icon: "👤",
   },
 ];
 
