@@ -120,6 +120,37 @@ export default function SwipeTabs(props: Props) {
     return icon({ color, size });
   };
 
+  // Fonction pour extraire la couleur de l'indicateur
+  const getIndicatorColor = (tabIndex: number): string => {
+    const tab = screens[tabIndex];
+    if (tab?.indicatorStyle && 'backgroundColor' in tab.indicatorStyle) {
+      return tab.indicatorStyle.backgroundColor as string;
+    }
+    if (indicatorStyle && 'backgroundColor' in indicatorStyle) {
+      return indicatorStyle.backgroundColor as string;
+    }
+    return "#000"; // Couleur par défaut
+  };
+
+  // Créer l'interpolation de couleur
+  const interpolateColor = () => {
+    const inputRange: number[] = [];
+    const outputRange: string[] = [];
+
+    screens.forEach((_, i) => {
+      inputRange.push(i);
+      outputRange.push(getIndicatorColor(i));
+    });
+
+    return combined.interpolate({
+      inputRange,
+      outputRange,
+      extrapolate: "clamp",
+    });
+  };
+
+  const backgroundColor = interpolateColor();
+
   // Build tabBar
   const tabBar = (
     <View style={[styles.tabBar, tabBarStyle]}>
@@ -178,6 +209,7 @@ export default function SwipeTabs(props: Props) {
             screens[index]?.indicatorStyle, // local
             {
               width: indicatorWidth,
+              backgroundColor, // Couleur interpolée !
               transform: [{ translateX }],
             },
           ]}
