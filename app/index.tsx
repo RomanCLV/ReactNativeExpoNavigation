@@ -9,29 +9,43 @@ import SwipeTabs, { SwipeTabItem } from "../components/swipe-tabs/swipeTabs";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function Page1() {
-
   const screens: SwipeTabItem[] = [
   {
     component: <PostsTab />,
-    title: "Posts",
     icon: ({ color, size }: { color: string; size: number }) => (
-      <Ionicons name="document-text-outline" size={size} color={color} />
+      <Ionicons name="apps-outline" size={size} color={color} />
+    ),
+    iconSelected: ({ color, size }: { color: string; size: number }) => (
+      <Ionicons name="apps" size={size} color={color} />
     ),
   },
   {
     component: <ShortsTab />,
-    title: "Shorts",
-    icon: "🎬",
+    icon: ({ color, size }: { color: string; size: number }) => (
+      <Ionicons name="bookmark-outline" size={size} color={color} />
+      
+    ),
+    iconSelected: ({ color, size }: { color: string; size: number }) => (
+      <Ionicons name="bookmark" size={size} color={color} />
+    ),
   },
   {
     component: <RepostTab />,
-    title: "Reposts",
-    icon: "🔄",
+    icon: ({ color, size }: { color: string; size: number }) => (
+      <Ionicons name="arrow-undo-circle-outline" size={size} color={color} />
+    ),
+    iconSelected: ({ color, size }: { color: string; size: number }) => (
+      <Ionicons name="arrow-undo-circle" size={size} color={color} />
+    ),
   },
   {
     component: <ProfileTab />,
-    title: "Profile",
-    icon: "👤",
+    icon: ({ color, size }: { color: string; size: number }) => (
+      <Ionicons name="bar-chart-outline" size={size} color={color} />
+    ),
+    iconSelected: ({ color, size }: { color: string; size: number }) => (
+      <Ionicons name="bar-chart" size={size} color={color} />
+    ),
   },
 ];
 

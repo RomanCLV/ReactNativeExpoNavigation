@@ -10,6 +10,7 @@ import PagerView from "react-native-pager-view";
 export type SwipeTabItem = {
   title?: string;
   icon?: string | ((props: { color: string; size: number }) => React.ReactNode);
+  iconSelected?: string | ((props: { color: string; size: number }) => React.ReactNode);
   component: React.ReactNode;
 };
 
@@ -18,6 +19,7 @@ type Props = {
   initialIndex?: number;
   showTabBar?: boolean;
   tabBarPosition?: "top" | "bottom";
+  showSelectedIndicator?: boolean;
   onIndexChange?: (index: number) => void;
 };
 
@@ -26,6 +28,7 @@ export default function SwipeTabs({
   initialIndex = 0,
   showTabBar = true,
   tabBarPosition = "top",
+  showSelectedIndicator = true,
   onIndexChange,
 }: Props) {
   const pagerRef = useRef<PagerView>(null);
@@ -37,49 +40,110 @@ export default function SwipeTabs({
     onIndexChange?.(i);
   };
 
-  const renderIcon = (
-    icon?: SwipeTabItem["icon"],
-    active?: boolean
-  ): React.ReactNode => {
-    if (!icon) return null;
+//const renderIcon = (
+//  screen: SwipeTabItem,
+//  active?: boolean): React.ReactNode => 
+//{
+//  // Choisir l'icône appropriée selon l'état actif
+//  const icon = active && screen.iconSelected ? screen.iconSelected : screen.icon;
+//
+//  if (!icon) 
+//    return null;
+//  
+//  // Support emoji string
+//  if (typeof icon === "string") {
+//    return (
+//      <Text style={{ fontSize: 18, marginVertical: 2, opacity: active ? 1 : 0.4, backgroundColor: "green" }}>
+//        {icon}
+//      </Text>
+//    );
+//  }
+//  
+//  // Function API: icon({color, size})
+//  return (
+//    <View style={{ marginVertical: 2, backgroundColor: "green" }}>
+//      {icon({ color: active ? "#000" : "#666", size: 22 })}
+//    </View>
+//  );
+//};
 
-    // Support emoji string for now
-    if (typeof icon === "string") {
+//  const tabBar = (
+//    <View style={styles.tabBar}>
+//      {screens.map((tab, i) => {
+//        const active = i === index;
+//        return (
+//          <TouchableOpacity
+//            key={i}
+//            onPress={() => handleChange(i)}
+//            style={[styles.tab]}
+//          >
+//            <View style={[styles.innerTab, !showSelectedIndicator && styles.marginH0]}>
+//              {renderIcon(tab, active)}
+//              {tab.title && (
+//                <Text style={[styles.tabText, active && styles.activeTabText]}>
+//                  {tab.title}
+//                </Text>
+//              )}
+//              { active && showSelectedIndicator && (<View style={styles.activeIndicator} /> )}
+//            </View>
+//          </TouchableOpacity>
+//        );
+//      })}
+//    </View>
+//  );
+
+const renderIcon = (
+  screen: SwipeTabItem,
+  active?: boolean
+): React.ReactNode => {
+  const icon = active && screen.iconSelected ? screen.iconSelected : screen.icon;
+
+  if (!icon) return null;
+
+  if (typeof icon === "string") {
+    return (
+      <Text style={[styles.iconText, !active && styles.iconInactive]}>
+        {icon}
+      </Text>
+    );
+  }
+
+  return icon({ color: active ? "#000" : "#666", size: 22 });
+};
+
+const tabBar = (
+  <View style={styles.tabBar}>
+    {screens.map((tab, i) => {
+      const active = i === index;
+      const hasTitle = !!tab.title;
+      const hasIcon = !!(tab.icon || tab.iconSelected);
+
       return (
-        <Text style={{ fontSize: 18, marginBottom: 2, opacity: active ? 1 : 0.4 }}>
-          {icon}
-        </Text>
-      );
-    }
-
-    // Future API: tabBarIcon({color,size})
-    return icon({
-      color: active ? "#000" : "#666",
-      size: 22,
-    });
-  };
-
-  const tabBar = (
-    <View style={styles.tabBar}>
-      {screens.map((tab, i) => {
-        const active = i === index;
-        return (
-          <TouchableOpacity
-            key={i}
-            onPress={() => handleChange(i)}
-            style={[styles.tab, active && styles.activeTab]}
-          >
-            {renderIcon(tab.icon, active)}
-            {tab.title && (
+        <TouchableOpacity
+          key={i}
+          onPress={() => handleChange(i)}
+          style={styles.tab}
+        >
+          <View style={styles.tabContent}>
+            {hasIcon && (
+              <View style={[styles.iconContainer, hasTitle && styles.iconWithTitle]}>
+                {renderIcon(tab, active)}
+              </View>
+            )}
+            {hasTitle && (
               <Text style={[styles.tabText, active && styles.activeTabText]}>
                 {tab.title}
               </Text>
             )}
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
+          </View>
+          {active && showSelectedIndicator && (
+            <View style={styles.activeIndicator} />
+          )}
+        </TouchableOpacity>
+      );
+    })}
+  </View>
+);
 
   return (
     <View style={{ flex: 1 }}>
@@ -107,28 +171,51 @@ export default function SwipeTabs({
 
 const styles = StyleSheet.create({
   tabBar: {
-    height: 50,
     flexDirection: "row",
-    backgroundColor: "#eee",
-    borderBottomColor: "#ccc",
+    backgroundColor: "#fff",
+    borderBottomColor: "#e0e0e0",
     borderBottomWidth: 1,
   },
   tab: {
     flex: 1,
-    alignItems: "center",
-    paddingVertical: 6,
-    justifyContent: "center",
+    position: "relative",
+    paddingVertical: 10,
+    paddingHorizontal: 4,
   },
-  activeTab: {
-    borderBottomWidth: 2,
-    borderBottomColor: "#000",
+  tabContent: {
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 4, // Espacement entre icône et titre (nécessite RN 0.71+)
+  },
+  iconContainer: {
+    // Pas de margin si pas de titre
+  },
+  iconWithTitle: {
+    // Petit espacement seulement s'il y a un titre
+    marginBottom: 2,
+  },
+  iconText: {
+    fontSize: 20,
+    opacity: 1,
+  },
+  iconInactive: {
+    opacity: 0.5,
+  },
+  activeIndicator: {
+    position: "absolute",
+    bottom: 0,
+    left: "20%",
+    right: "20%",
+    height: 2,
+    backgroundColor: "#000",
   },
   tabText: {
     fontSize: 12,
-    color: "#444",
+    color: "#666",
+    fontWeight: "500",
   },
   activeTabText: {
     color: "#000",
-    fontWeight: "600",
+    fontWeight: "700",
   },
 });
