@@ -40,110 +40,58 @@ export default function SwipeTabs({
     onIndexChange?.(i);
   };
 
-//const renderIcon = (
-//  screen: SwipeTabItem,
-//  active?: boolean): React.ReactNode => 
-//{
-//  // Choisir l'icône appropriée selon l'état actif
-//  const icon = active && screen.iconSelected ? screen.iconSelected : screen.icon;
-//
-//  if (!icon) 
-//    return null;
-//  
-//  // Support emoji string
-//  if (typeof icon === "string") {
-//    return (
-//      <Text style={{ fontSize: 18, marginVertical: 2, opacity: active ? 1 : 0.4, backgroundColor: "green" }}>
-//        {icon}
-//      </Text>
-//    );
-//  }
-//  
-//  // Function API: icon({color, size})
-//  return (
-//    <View style={{ marginVertical: 2, backgroundColor: "green" }}>
-//      {icon({ color: active ? "#000" : "#666", size: 22 })}
-//    </View>
-//  );
-//};
+  const renderIcon = (
+    screen: SwipeTabItem,
+    active?: boolean
+  ): React.ReactNode => {
+    const icon = active && screen.iconSelected ? screen.iconSelected : screen.icon;
 
-//  const tabBar = (
-//    <View style={styles.tabBar}>
-//      {screens.map((tab, i) => {
-//        const active = i === index;
-//        return (
-//          <TouchableOpacity
-//            key={i}
-//            onPress={() => handleChange(i)}
-//            style={[styles.tab]}
-//          >
-//            <View style={[styles.innerTab, !showSelectedIndicator && styles.marginH0]}>
-//              {renderIcon(tab, active)}
-//              {tab.title && (
-//                <Text style={[styles.tabText, active && styles.activeTabText]}>
-//                  {tab.title}
-//                </Text>
-//              )}
-//              { active && showSelectedIndicator && (<View style={styles.activeIndicator} /> )}
-//            </View>
-//          </TouchableOpacity>
-//        );
-//      })}
-//    </View>
-//  );
+    if (!icon) return null;
 
-const renderIcon = (
-  screen: SwipeTabItem,
-  active?: boolean
-): React.ReactNode => {
-  const icon = active && screen.iconSelected ? screen.iconSelected : screen.icon;
-
-  if (!icon) return null;
-
-  if (typeof icon === "string") {
-    return (
-      <Text style={[styles.iconText, !active && styles.iconInactive]}>
-        {icon}
-      </Text>
-    );
-  }
-
-  return icon({ color: active ? "#000" : "#666", size: 22 });
-};
-
-const tabBar = (
-  <View style={styles.tabBar}>
-    {screens.map((tab, i) => {
-      const active = i === index;
-      const hasTitle = !!tab.title;
-      const hasIcon = !!(tab.icon || tab.iconSelected);
-
+    if (typeof icon === "string") {
       return (
-        <TouchableOpacity
-          key={i}
-          onPress={() => handleChange(i)}
-          style={styles.tab}
-        >
-          <View style={styles.tabContent}>
-            {hasIcon && (
-              <View style={[styles.iconContainer, hasTitle && styles.iconWithTitle]}>
-                {renderIcon(tab, active)}
-              </View>
-            )}
-            {hasTitle && (
-              <Text style={[styles.tabText, active && styles.activeTabText]}>
-                {tab.title}
-              </Text>
-            )}
-          </View>
-          {active && showSelectedIndicator && (
-            <View style={styles.activeIndicator} />
-          )}
-        </TouchableOpacity>
+        <Text style={[styles.iconText, !active && styles.iconInactive]}>
+          {icon}
+        </Text>
       );
-    })}
-  </View>
-);
+    }
+
+    return icon({ color: active ? "#000" : "#666", size: 22 });
+  };
+
+  const tabBar = (
+    <View style={styles.tabBar}>
+      {screens.map((tab, i) => {
+        const active = i === index;
+        const hasTitle = !!tab.title;
+        const hasIcon = !!(tab.icon || tab.iconSelected);
+
+        return (
+          <TouchableOpacity
+            key={i}
+            onPress={() => handleChange(i)}
+            style={styles.tab}
+          >
+            <View style={styles.tabContent}>
+              {hasIcon && (
+                <View style={[styles.iconContainer, hasTitle && styles.iconWithTitle]}>
+                  {renderIcon(tab, active)}
+                </View>
+              )}
+              {hasTitle && (
+                <Text style={[styles.tabText, active && styles.activeTabText]}>
+                  {tab.title}
+                </Text>
+              )}
+            </View>
+            {active && showSelectedIndicator && (
+              <View style={styles.activeIndicator} />
+            )}
+          </TouchableOpacity>
+        );
+      })}
+    </View>
+  );
 
   return (
     <View style={{ flex: 1 }}>
