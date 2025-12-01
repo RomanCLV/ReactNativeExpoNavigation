@@ -95,7 +95,6 @@ export default function SwipeTabs(props: Props) {
 
   const handleChange = (i: number) => {
     pagerRef.current?.setPage(i);   // animation native
-    //setIndex(i);
     onIndexChange?.(i);
   };
 
@@ -121,7 +120,7 @@ export default function SwipeTabs(props: Props) {
     return icon({ color, size });
   };
 
-  // Build tabBar (indicator must be OUTSIDE the map)
+  // Build tabBar
   const tabBar = (
     <View style={[styles.tabBar, tabBarStyle]}>
       {screens.map((tab, i) => {
