@@ -11,22 +11,30 @@ export default function Page2() {
   {
     component: <PostsTab />,
     title: "Posts",
-    icon: "📸"
+    icon: "📸",
+    activeTextStyle: { color: "pink" },
+    indicatorStyle: { backgroundColor: "pink" },
   },
   {
     component: <ShortsTab />,
     title: "Shorts",
     icon: "🎬",
+    activeTextStyle: { color: "#8eff8e" },
+    indicatorStyle: { backgroundColor: "#8eff8e" },
   },
   {
     component: <RepostTab />,
     title: "Reposts",
     icon: "🔄",
+    activeTextStyle: { color: "#CCCCFF" },
+    indicatorStyle: { backgroundColor: "#CCCCFF" },
   },
   {
     component: <ProfileTab />,
     title: "Profile",
     icon: "👤",
+    activeTextStyle: { color: "#FFE5AA" },
+    indicatorStyle: { backgroundColor: "#FFE5AA" },
   },
 ];
 
@@ -39,6 +47,10 @@ export default function Page2() {
         showSelectedIndicator={true}
         tabBarPosition="top"
         onIndexChange={(i) => console.log("Nouvel index:", i)}
+        textStyle={{opacity: 0.5}}
+        activeTextStyle={{fontStyle: "italic", fontWeight: "900", opacity: 1}}
+        tabBarStyle={{backgroundColor: "#fff"}}
+        indicatorStyle={{marginBottom: 5}}
       />
     </View>
   );

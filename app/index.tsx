@@ -37,6 +37,7 @@ export default function Page1() {
     iconSelected: ({ color, size }: { color: string; size: number }) => (
       <Ionicons name="arrow-undo-circle" size={size} color={color} />
     ),
+    iconSize: 24
   },
   {
     component: <ProfileTab />,
